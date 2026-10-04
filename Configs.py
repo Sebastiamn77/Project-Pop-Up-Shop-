@@ -47,95 +47,134 @@ IndeptMenu = {
 
 }
 cart = []
-global firstimeordering
-firstimeordering = True
+
+
 def ordering():
-    global firstimeordering
-    if firstimeordering == True:
-        print("Welcome to the Green Team Ice Cream Shop!")
-        firstimeordering = False
-        see_menu = input("Would you like to see our menu? (yes/no): ")
-        if see_menu.lower() == "yes":
-            menutype=input("Type Shakes, Ice Cream, or Pastries: ")
-            if menutype.lower() == "shakes":
+    customer_name = input("Welcome! What's your name? ").strip().title()
+    print(f"Welcome to the Green Team Ice Cream Shop, {customer_name}!")
+    while True:
+        print()
+        print("1) View Menu")
+        print("2) Add Item")
+        print("3) Remove Item")
+        print("4) View Cart")
+        print("5) Checkout")
+        choice = input("Choose an option: ").strip()
+        #  Menu
+        if choice == "1":
+            print()
+            print("What type of food would you like to see?")
+            print("1) Shakes")
+            print("2) Ice Cream")
+            print("3) Pastries")
+            menutype = input("Choose a menu type: ").strip().lower()
+            if menutype == "shakes":
+                print()
                 print("Here are our shakes:")
+                print("-" * 55)
                 for item, (price, category) in catalog.items():
                     if category == "Shake":
-                        print(f"{item} - ${price:.2f} ({category})")
-            elif menutype.lower() == "ice cream":
+                        print(f"{item:<35} {category:<10} ${price:>5.2f}")
+            elif menutype == "ice cream":
+                print()
                 print("Here are our ice creams:")
+                print("-" * 55)
                 for item, (price, category) in catalog.items():
-                    if category == "Scope":
-                        print(f"{item} - ${price:.2f} ({category})")
-            elif menutype.lower() == "pastries":
+                    if category == "Scoop":
+                        print(f"{item:<35} {category:<10} ${price:>5.2f}")
+            elif menutype == "pastries":
+                print()
                 print("Here are our pastries:")
+                print("-" * 55)
                 for item, (price, category) in catalog.items():
                     if category == "Pastry":
-                        print(f"{item} - ${price:.2f} ({category})")
+                        print(f"{item:<35} {category:<10} ${price:>5.2f}")
             else:
-                print("Invalid menu type. Please choose from Shakes, Ice Cream, or Pastries.")
-   
-    imdonenameingthings = input("Type 1 to add an item to your cart, type 2 to view your cart, type 3 to checkout, type 4 to see the menu again, or type 5 to see the menu descriptions: ")
-    if imdonenameingthings == "1":
-        item_to_add = input("Enter the name of the item you want to add: ")
-        numberof_items = input("How many of this item would you like to add? ")
-        if item_to_add in catalog:
-            for _ in range(int(numberof_items)):
-                cart.append((item_to_add, int(numberof_items)))
-            print(f"{numberof_items} {item_to_add}(s) have been added to your cart.")
-            ordering()
-            
-        else:
-            print("Sorry, that item is not on the menu.")
-            ordering()
+                print("Invalid menu type. Please choose Shakes, Ice Cream, or Pastries.")
 
-    elif imdonenameingthings == "2":
-        if cart:
-            print("Your cart contains:")
-            for item, quantity in cart:
-                price, category = catalog[item]
-                print(f"{item} - ${price:.2f} ({category}) x {quantity}")
-                ordering()
-        else:
-            print("Your cart is empty.")
-            ordering()
-    elif imdonenameingthings == "3":
-        if cart:
-            reciptmaker()
-        else:
-            print("Your cart is empty.")
-            ordering()
-    elif imdonenameingthings == "4":
-        menutype=input("Type Shakes, Ice Cream, or Pastries: ")
-        if menutype.lower() == "shakes":
-            print("Here are our shakes:")
-            for item, (price, category) in catalog.items():
-                if category == "Shake":
-                    print(f"{item} - ${price:.2f} ({category})")
-                    ordering()
-        elif menutype.lower() == "ice cream":
-            print("Here are our ice creams:")
-            for item, (price, category) in catalog.items():
-                if category == "Scope":
-                    print(f"{item} - ${price:.2f} ({category})")
-                    ordering()
-        elif menutype.lower() == "pastries":
-            print("Here are our pastries:")
-            for item, (price, category) in catalog.items():
-                if category == "Pastry":
-                    print(f"{item} - ${price:.2f} ({category})")
-                    ordering()
-        else:
-            print("Invalid menu type. Please choose from Shakes, Ice Cream, or Pastries.")
-    elif imdonenameingthings == "5":
-        item_description = input("What item do you want to see the description for? ")
-        if item_description in IndeptMenu:
-            print(f"{item_description}: {IndeptMenu[item_description]}")
-            ordering()
-        else:
-            print("Item not found. Please check the spelling and try again.")
-            ordering()
-
+        # Add Item
+        elif choice == "2":
+            item_to_add = input(
+                "Enter the name of the item you want to add: "
+            ).strip().lower()
+            if item_to_add in catalog:
+                numberof_items = input(
+                    "How many of this item would you like to add? "
+                ).strip()
+                if not numberof_items.isdigit() or int(numberof_items) == 0:
+                    print("Quantity must be a whole number greater than 0.")
+                else:
+                    quantity = int(numberof_items)
+                    item_found = False
+                    for i, (item, old_quantity) in enumerate(cart):
+                        if item == item_to_add:
+                            cart[i] = (item_to_add, old_quantity + quantity)
+                            item_found = True
+                            break
+                    if item_found:
+                        print(
+                            f"{quantity} more {item_to_add.title()}(s) "
+                            "have been added to your cart."
+                        )
+                    else:
+                        cart.append((item_to_add, quantity))
+                        print(
+                            f"{quantity} {item_to_add.title()}(s) "
+                            "have been added to your cart."
+                        )
+        #remove item 
+        elif choice == "3":
+            item_to_remove = input(
+                "Enter the name of the item you want to remove: "
+            ).strip().lower()
+            if item_to_remove in catalog:
+                numberof_items = input(
+                    "How many of this item would you like to remove? "
+                ).strip()
+                if not numberof_items.isdigit() or int(numberof_items) == 0:
+                    print("Quantity must be a whole number greater than 0.")
+                else:
+                    quantity = int(numberof_items)
+                    item_found = False
+                    for i, (item, old_quantity) in enumerate(cart):
+                        if item == item_to_remove:
+                            if old_quantity <= quantity:
+                                del cart[i]
+                                print(
+                                    f"{old_quantity} {item_to_remove.title()}(s) "
+                                    "have been removed from your cart."
+                                )
+                            else:
+                                cart[i] = (item_to_remove, old_quantity - quantity)
+                                print(
+                                    f"{quantity} {item_to_remove.title()}(s) "
+                                    "have been removed from your cart."
+                                )
+                            item_found = True
+                            break
+                    if not item_found:
+                        print(f"{item_to_remove.title()} is not in your cart.")
+            else:
+                print(f"{item_to_remove.title()} is not in the catalog.")
+        #double check cart
+        elif choice == "4":
+            if cart:
+                print()
+                print("Your cart contains:")
+                print("-" * 55)
+                for item, quantity in cart:
+                    price, category = catalog[item]
+                    line_total = price * quantity
+                print(f"{quantity} x {item.title():<30} ${line_total:>6.2f}")
+            else:
+                print("Your cart is empty.")
+        #checkout
+        elif choice == "5":
+            if len(cart) == 0:
+                print("Your cart is empty. You cannot check out.")
+            else:
+                reciptmaker()
+                break
 
 def reciptmaker():
     if cart:
