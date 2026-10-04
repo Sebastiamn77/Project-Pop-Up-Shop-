@@ -1,6 +1,6 @@
 import configs
 import Recipt
-# last edited 10-3-26 by sebastianmartinez10
+# Sebastians part 
 def ordering():
     customer_name = input("Welcome! What's your name? ").strip().title()
     print(f"Welcome to the Green Team Ice Cream Shop, {customer_name}!")

@@ -2,6 +2,7 @@ import configs
 # don't touch this ALEX
 # Reference the configs.varibles in this file using configs.variable_name, so that it works.
 # This makes things neater and easier to read but is mostly for the sake of coolness. 
+#Alex's part
 
 def reciptmaker():
     if configs.cart:
