@@ -53,7 +53,7 @@ def ordering():
     customer_name = input("Welcome! What's your name? ").strip().title()
     print(f"Welcome to the Green Team Ice Cream Shop, {customer_name}!")
     while True:
-        print()
+        print("Type the number of the option you want to choose:")
         print("1) View Menu")
         print("2) Add Item")
         print("3) Remove Item")
@@ -62,28 +62,24 @@ def ordering():
         choice = input("Choose an option: ").strip()
         #  Menu
         if choice == "1":
-            print()
             print("What type of food would you like to see?")
             print("1) Shakes")
             print("2) Ice Cream")
             print("3) Pastries")
             menutype = input("Choose a menu type: ").strip().lower()
             if menutype == "shakes":
-                print()
                 print("Here are our shakes:")
                 print("-" * 55)
                 for item, (price, category) in catalog.items():
                     if category == "Shake":
                         print(f"{item:<35} {category:<10} ${price:>5.2f}")
             elif menutype == "ice cream":
-                print()
                 print("Here are our ice creams:")
                 print("-" * 55)
                 for item, (price, category) in catalog.items():
                     if category == "Scoop":
                         print(f"{item:<35} {category:<10} ${price:>5.2f}")
             elif menutype == "pastries":
-                print()
                 print("Here are our pastries:")
                 print("-" * 55)
                 for item, (price, category) in catalog.items():
@@ -125,41 +121,27 @@ def ordering():
         #remove item 
         elif choice == "3":
             item_to_remove = input(
-                "Enter the name of the item you want to remove: "
-            ).strip().lower()
-            if item_to_remove in catalog:
-                numberof_items = input(
-                    "How many of this item would you like to remove? "
-                ).strip()
-                if not numberof_items.isdigit() or int(numberof_items) == 0:
-                    print("Quantity must be a whole number greater than 0.")
-                else:
-                    quantity = int(numberof_items)
-                    item_found = False
-                    for i, (item, old_quantity) in enumerate(cart):
-                        if item == item_to_remove:
-                            if old_quantity <= quantity:
-                                del cart[i]
-                                print(
-                                    f"{old_quantity} {item_to_remove.title()}(s) "
-                                    "have been removed from your cart."
-                                )
-                            else:
-                                cart[i] = (item_to_remove, old_quantity - quantity)
-                                print(
-                                    f"{quantity} {item_to_remove.title()}(s) "
-                                    "have been removed from your cart."
-                                )
-                            item_found = True
-                            break
-                    if not item_found:
-                        print(f"{item_to_remove.title()} is not in your cart.")
+                "Enter the name of the item you want to remove: ").strip().lower()
+            found_item = None
+            for item, quantity in cart:
+                if item == item_to_remove:
+                    found_item = (item, quantity)
+                    break
+            if found_item is not None:
+                cart.remove(found_item)
+                print(
+                    f"{item_to_remove.title()} has been removed "
+                    "from your cart."
+                )
             else:
-                print(f"{item_to_remove.title()} is not in the catalog.")
+                print(
+                    f"Sorry, '{item_to_remove.title()}' "
+                    "isn't in your cart."
+                )
         #double check cart
         elif choice == "4":
             if cart:
-                print()
+                 
                 print("Your cart contains:")
                 print("-" * 55)
                 for item, quantity in cart:
