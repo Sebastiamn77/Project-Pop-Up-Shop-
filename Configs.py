@@ -1,11 +1,11 @@
 catalog = {
     #ice cream 
-    "Lemon Meringue Pie": (4.95, "Scope"),
-    "Raspberry White Chocolate Truffle": (4.95, "Scope"),
-    "Campfire S'mores": (4.95, "Scope"),
-    "Red Velvet Cheesecake": (4.95, "Scope"),
-    "Churro & Dulce de Leche": (4.95, "Scope"),
-    "Powdered Jelly Donut": (4.95, "Scope"),
+    "Lemon Meringue Pie": (4.95, "Scoop"),
+    "Raspberry White Chocolate Truffle": (4.95, "Scoop"),
+    "Campfire S'mores": (4.95, "Scoop"),
+    "Red Velvet Cheesecake": (4.95, "Scoop"),
+    "Churro & Dulce de Leche": (4.95, "Scoop"),
+    "Powdered Jelly Donut": (4.95, "Scoop"),
     
     #shakes 
     "Lemon Meringue Shake": (9.95, "Shake"),

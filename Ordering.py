@@ -14,31 +14,40 @@ def ordering():
         choice = input("Choose an option: ").strip()
         #  Menu
         if choice == "1":
-            print("What type of food would you like to see?")
-            print("1) Shakes")
-            print("2) Ice Cream")
-            print("3) Pastries")
-            menutype = input("Choose a menu type: ").strip().lower()
-            if menutype == "1" or menutype == "shakes":
-                print("Here are our shakes:")
+            complex=input("Would you like to see the menu with descriptions? (yes/no): ").strip().lower()
+            if complex == "yes":
                 print("-" * 55)
-                for item, (price, category) in configs.catalog.items():
-                    if category == "Shake":
-                        print(f"{item:<35} {category:<10} ${price:>5.2f}")
-            elif menutype == "2" or menutype == "ice cream":
-                print("Here are our ice creams:")
-                print("-" * 55)
-                for item, (price, category) in configs.catalog.items():
-                    if category == "Scoop":
-                        print(f"{item:<35} {category:<10} ${price:>5.2f}")
-            elif menutype == "3" or menutype == "pastries":
-                print("Here are our pastries:")
-                print("-" * 55)
-                for item, (price, category) in configs.catalog.items():
-                    if category == "Pastry":
-                        print(f"{item:<35} {category:<10} ${price:>5.2f}")
+                for item, description in configs.IndeptMenu.items():
+                    price, category = configs.catalog[item]
+                    print(f"{item:<35} {category:<10} ${price:>5.2f}")
+                    print(f"Description: {description}")
+                    print("-" * 55)
             else:
-                print("Invalid menu type. Please choose Shakes, Ice Cream, or Pastries.")
+                print("What type of food would you like to see?")
+                print("1) Shakes")
+                print("2) Ice Cream")
+                print("3) Pastries")
+                menutype = input("Choose a menu type: ").strip().lower()
+                if menutype == "1" or menutype == "shakes":
+                    print("Here are our shakes:")
+                    print("-" * 55)
+                    for item, (price, category) in configs.catalog.items():
+                        if category == "Shake":
+                            print(f"{item:<35} {category:<10} ${price:>5.2f}")
+                elif menutype == "2" or menutype == "ice cream":
+                    print("Here are our ice creams:")
+                    print("-" * 55)
+                    for item, (price, category) in configs.catalog.items():
+                        if category == "Scoop":
+                            print(f"{item:<35} {category:<10} ${price:>5.2f}")
+                elif menutype == "3" or menutype == "pastries":
+                    print("Here are our pastries:")
+                    print("-" * 55)
+                    for item, (price, category) in configs.catalog.items():
+                        if category == "Pastry":
+                            print(f"{item:<35} {category:<10} ${price:>5.2f}")
+                else:
+                    print("Invalid menu type. Please choose Shakes, Ice Cream, or Pastries.")
 
         # Add Item
         elif choice == "2":
@@ -120,7 +129,7 @@ def ordering():
                 for item, quantity in configs.cart:
                     price, category = configs.catalog[item]
                     line_total = price * quantity
-                print(f"{quantity} x {item.title():<30} ${line_total:>6.2f}")
+                    print(f"{quantity} x {item.title():<30} ${line_total:>6.2f}")
             else:
                 print("Your cart is empty.")
         #checkout

@@ -16,12 +16,15 @@ def reciptmaker():
         if promo.startswith("save"):
             percent = promo[4:]
             if percent.isdigit():
-                discount = int(percent) / 100
+                discount = min(0.5, int(percent) / 100)  # Cap discount at 50%
             else:
                 print("Invalid promo code. No discount will be applied.")
+        else:
+            print("Invalid promo code. No discount will be applied.")
         print("=" * 36)
         print("RECEIPT".center(36))
         print(f"Customer: {configs.customer_name}")
+        print(f"Customer Code: {configs.customer_name[:3].upper()}-{len(configs.cart)}")
         print("-" * 36)
         
         for item, quantity in configs.cart:
@@ -39,6 +42,16 @@ def reciptmaker():
         tax = total * TAX_RATE
         total_with_tax = total + tax
         print("Tax (7%): ${:.2f}".format(tax))
+        print("-" * 36)
+        print("Items by Category:")
+        # for category in ["Scoop", "Shake", "Pastry"]:
+        #     print(f"  {category}:")
+        #     number_of_items = 0
+        #     for item, quantity in configs.cart:
+        #         _, item_category = configs.catalog[item]
+        #         number_of_items += quantity
+        #         if number_of_items > 0 and item_category == category:
+        #             print(f"    {number_of_items}")
         print("=" * 36)
         print("Total: ${:.2f}".format(total_with_tax))
         print("=" * 36)
