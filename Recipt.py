@@ -10,7 +10,7 @@ def reciptmaker():
         subtotal = 0
         item_total = 0
         discount = 0.0
-        tax_rate = configs.tax_rate
+        TAX_RATE = configs.TAX_RATE
 
         promo = input("Promo code (Enter to skip): ").strip().lower()
         if promo.startswith("save"):
@@ -21,7 +21,7 @@ def reciptmaker():
                 print("Invalid promo code. No discount will be applied.")
         print("=" * 36)
         print("RECEIPT".center(36))
-        print("Customer something somethign")
+        print(f"Customer: {configs.customer_name}")
         print("-" * 36)
         
         for item, quantity in configs.cart:
@@ -29,18 +29,18 @@ def reciptmaker():
             item_total += price * quantity
             subtotal += item_total
             print(f"{quantity} x {item} - ${price:.2f} ({category})")
-        print("Total: ${:.2f}".format(subtotal))
+        print("Subtotal: ${:.2f}".format(subtotal))
         if discount > 0:
             discount_amount = subtotal * discount
             total = subtotal - discount_amount
             print("Discount: -${:.2f}".format(discount_amount))
         else:
             total = subtotal
-        tax = total * tax_rate
+        tax = total * TAX_RATE
         total_with_tax = total + tax
         print("Tax (7%): ${:.2f}".format(tax))
         print("=" * 36)
-        print("Total with tax: ${:.2f}".format(total_with_tax))
+        print("Total: ${:.2f}".format(total_with_tax))
         print("=" * 36)
     else:
         print("Your cart is empty.")

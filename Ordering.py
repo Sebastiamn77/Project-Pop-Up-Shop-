@@ -2,8 +2,8 @@ import configs
 import Recipt
 # Sebastians part 
 def ordering():
-    customer_name = input("Welcome! What's your name? ").strip().title()
-    print(f"Welcome to the Green Team Ice Cream Shop, {customer_name}!")
+    configs.customer_name = input("Welcome! What's your name? ").strip().title()
+    print(f"Welcome to the Green Team Ice Cream Shop, {configs.customer_name}!")
     while True:
         print("Type the number of the option you want to choose:")
         print("1) View Menu")
@@ -19,19 +19,19 @@ def ordering():
             print("2) Ice Cream")
             print("3) Pastries")
             menutype = input("Choose a menu type: ").strip().lower()
-            if menutype == "shakes":
+            if menutype == "1" or menutype == "shakes":
                 print("Here are our shakes:")
                 print("-" * 55)
                 for item, (price, category) in configs.catalog.items():
                     if category == "Shake":
                         print(f"{item:<35} {category:<10} ${price:>5.2f}")
-            elif menutype == "ice cream":
+            elif menutype == "2" or menutype == "ice cream":
                 print("Here are our ice creams:")
                 print("-" * 55)
                 for item, (price, category) in configs.catalog.items():
                     if category == "Scoop":
                         print(f"{item:<35} {category:<10} ${price:>5.2f}")
-            elif menutype == "pastries":
+            elif menutype == "3" or menutype == "pastries":
                 print("Here are our pastries:")
                 print("-" * 55)
                 for item, (price, category) in configs.catalog.items():
@@ -74,19 +74,38 @@ def ordering():
                 )
         #remove item 
         elif choice == "3":
-            item_to_remove = input(
-                "Enter the name of the item you want to remove: ").strip().title()
+            item_to_remove = input("Enter the name of the item you want to remove: ").strip().title()
             found_item = None
             for item, quantity in configs.cart:
+                totalremove = quantity
+                if totalremove > 1:
+                    print(f"You have {totalremove} of {item}. How many would you like to remove?")
+                    remove_quantity = input("Enter the quantity to remove: ").strip()
+                    if not remove_quantity.isdigit() or int(remove_quantity) <= 0:
+                        print("Quantity must be a whole number greater than 0.")
+                        continue
+                    remove_quantity = int(remove_quantity)
+                    if remove_quantity >= totalremove:
+                        configs.cart.remove((item, quantity))
+                        print(f"All {item} have been removed from your cart.")
+                    else:
+                        new_quantity = totalremove - remove_quantity
+                        configs.cart.remove((item, quantity))
+                        configs.cart.append((item, new_quantity))
+                        print(f"{remove_quantity} of {item} have been removed from your cart. You now have {new_quantity} left.")
+                else:
+                    if item == item_to_remove:
+                        found_item = (item, quantity)
+                        break
+                if found_item is not None:
+                    configs.cart.remove(found_item)
+                    print(
+                        f"{item_to_remove.title()} has been removed "
+                        "from your cart."
+                        )
                 if item == item_to_remove:
-                    found_item = (item, quantity)
+                    found_item = (item)
                     break
-            if found_item is not None:
-                configs.cart.remove(found_item)
-                print(
-                    f"{item_to_remove.title()} has been removed "
-                    "from your cart."
-                )
             else:
                 print(
                     f"Sorry, '{item_to_remove.title()}' "
