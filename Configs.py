@@ -2,7 +2,7 @@ catalog = {
     #ice cream 
     "Lemon Meringue Pie": (4.95, "Scoop"),
     "Raspberry White Chocolate Truffle": (4.95, "Scoop"),
-    "Campfire S'mores": (4.95, "Scoop"),
+    "Campfire Smores": (4.95, "Scoop"),
     "Red Velvet Cheesecake": (4.95, "Scoop"),
     "Churro & Dulce de Leche": (4.95, "Scoop"),
     "Powdered Jelly Donut": (4.95, "Scoop"),
@@ -20,7 +20,7 @@ catalog = {
     "Apple Pie": (4.95, "Pastry"),
     "Chocolate Chip Cookie": (1.95, "Pastry"),
     "Cinnamon Roll": (2.95, "Pastry"),
-    "Crounton": (2.95, "Pastry"),
+    "Cronut": (2.95, "Pastry"),
     "Churro bites": (3.95, "Pastry"),
 
 }
@@ -42,10 +42,11 @@ IndeptMenu = {
     "Apple Pie": "A classic apple pie with a flaky crust and sweet apple filling.",
     "Chocolate Chip Cookie": "A soft and chewy chocolate chip cookie with a golden brown exterior.",
     "Cinnamon Roll": "A sweet cinnamon roll with a soft and fluffy interior, topped with a sweet glaze.",
-    "Crounton": "A crunchy and buttery pastry with a sweet glaze.",
+    "Cronut": "A crunchy and buttery pastry with a sweet glaze.",
     "Churro bites": "A bite-sized version of the classic churro, coated in cinnamon sugar and served with a sweet dipping sauce.",  
 
 }
 cart = []
 TAX_RATE = 0.0775
 customer_name = ""
+
