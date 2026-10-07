@@ -10,14 +10,17 @@ def reciptmaker():
         subtotal = 0
         item_total = 0
         discount = 0.0
+        discount_amount = 0
         TAX_RATE = Configs.TAX_RATE
         count_category = {}
+        discount_applied = False
 
         promo = input("Promo code (Enter to skip): ").strip().lower()
         if promo.startswith("save"):
             percent = promo[4:]
             if percent.isdigit():
                 discount = min(0.5, int(percent) / 100)  # Cap discount at 50%
+                discount_applied = True
             else:
                 print("Invalid promo code. No discount will be applied.")
         else:
@@ -40,17 +43,17 @@ def reciptmaker():
             count_category[category] += quantity
 
         print("Subtotal: ${:.2f}".format(subtotal))
-        if discount > 0:
+        if discount_applied: 
             discount_amount = subtotal * discount
             total = subtotal - discount_amount
             print("Discount: -${:.2f}".format(discount_amount))
         else:
             total = subtotal
-        
-        tax = total * TAX_RATE
+
+        tax = total * Configs.TAX_RATE
         total_with_tax = total + tax
 
-        print("Tax (7%): ${:.2f}".format(tax))
+        print("Tax (7.75%): ${:.2f}".format(tax))
         print("-" * 36)
         print("Items by Category:")
         
